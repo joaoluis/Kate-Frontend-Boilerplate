@@ -1,0 +1,37 @@
+/**
+ * Spacing classes
+ * Should be used to modify the default spacing between objects (not between nodes of the same object)
+ * Please use judiciously. You want to be using defaults most of the time, these are exceptions!
+ * 
+ * Usage: 
+ * 
+ * <type><location><size>
+ * 
+ * <type>     p,m        = padding,margin
+ * <location> a,t,r,b,l  = all,top,right,bottom,left
+ * <size>     n,s,m,l,xl = none,small,medium,large,extra-large
+ * 
+ */
+
+$types: (margin m), (padding p) ;
+$locations: (all a), (top t), (right r), (bottom b), (left l);
+$sizes: n, s, m, l, xl;
+$size-unit: 5px;
+$i: 0;
+
+@each $type in $types {
+	@each $location in $locations {
+		@each $size in $sizes {
+			.#{nth($type, 2)}#{nth($location, 2)}#{$size} {
+				@if nth($location, 1) == all {
+					#{nth($type, 1)}: $size-unit * $i;
+				} @else {
+					#{nth($type, 1)}-#{nth($location, 1)}: $size-unit * $i;
+				}
+				$i: $i + 1;
+			}
+		}
+		$i: 0;
+	}
+	$i: 0;
+}
