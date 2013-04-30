@@ -1,0 +1,118 @@
+/*!
+ * Kate Frontend Bootstrap Grid System
+ * Based on 960 Grid System - http://960.gs/
+ */
+
+$grid-columns:      12;
+$grid-column-width: 60px;
+$grid-gutter-width: 20px;
+$grid-row-width:    ($grid-columns * $grid-column-width) + ($grid-gutter-width * ($grid-columns - 1));
+$grid-total-width:  $grid-row-width + $grid-gutter-width;
+
+%column-properties {
+	display:inline;
+	float: left;
+	position: relative;
+	margin-left: #{$grid-gutter-width / 2};
+	margin-right: #{$grid-gutter-width / 2};
+}
+
+%push-pull-properties {
+	position: relative;
+}
+
+body {
+  min-width: #{$grid-total-width};
+}
+
+.container_#{$grid_columns} {
+	margin-left: auto;
+	margin-right: auto;
+	width: #{$grid-total-width};
+}
+
+$i: 0;
+@for $i from 1 through $grid-columns {
+	.grid_#{$i} {
+		@extend %column-properties
+	}
+}
+
+$i: 0;
+@for $i from 1 through $grid-columns {
+	.push_#{$i}, 
+	.pull_#{$i} {
+		@extend %push-pull-properties
+	}
+}
+
+.alpha {
+	margin-left: 0;
+}
+
+.omega {
+	margin-right: 0;
+}
+
+$i: 0;
+@for $i from 1 through $grid-columns {
+	.container_#{$grid_columns} .grid_#{$i} {
+		width: #{($grid-column-width * $i  + $grid-gutter-width * ($i - 1))}
+	}
+}
+
+$i: 0;
+@for $i from 1 through ($grid-columns - 1) {
+	.container_#{$grid_columns} .prefix_#{$i} {
+		padding-left: #{($grid-column-width + $grid-gutter-width) * $i}
+	}
+	.container_#{$grid_columns} .suffix_#{$i} {
+		padding-right: #{($grid-column-width + $grid-gutter-width) * $i}
+	}
+	.container_#{$grid_columns} .push_#{$i} {
+		left: #{($grid-column-width + $grid-gutter-width) * $i}
+	}
+	.container_#{$grid_columns} .pull_#{$i} {
+		left: -#{($grid-column-width + $grid-gutter-width) * $i}
+	}
+}
+
+/*!
+ * Clear Floated Elements
+ */
+
+/* http://sonspring.com/journal/clearing-floats */
+
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+/* http://www.yuiblog.com/blog/2010/09/27/clearfix-reloaded-overflowhidden-demystified */
+
+.clearfix:before,
+.clearfix:after {
+  content: '\0020';
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+.clearfix:after {
+  clear: both;
+}
+
+/*
+  The following zoom:1 rule is specifically for IE6 + IE7.
+  Move to separate stylesheet if invalid CSS is a problem.
+*/
+
+.clearfix {
+  zoom: 1;
+}
