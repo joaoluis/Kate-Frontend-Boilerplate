@@ -3,9 +3,6 @@
  * Based on 960 Grid System - http://960.gs/
  */
 
-$grid-columns:      12;
-$grid-column-width: 60px;
-$grid-gutter-width: 20px;
 $grid-row-width:    ($grid-columns * $grid-column-width) + ($grid-gutter-width * ($grid-columns - 1));
 $grid-total-width:  $grid-row-width + $grid-gutter-width;
 
@@ -75,44 +72,4 @@ $i: 0;
 	.container_#{$grid_columns} .pull_#{$i} {
 		left: -#{($grid-column-width + $grid-gutter-width) * $i}
 	}
-}
-
-/*!
- * Clear Floated Elements
- */
-
-/* http://sonspring.com/journal/clearing-floats */
-
-.clear {
-  clear: both;
-  display: block;
-  overflow: hidden;
-  visibility: hidden;
-  width: 0;
-  height: 0;
-}
-
-/* http://www.yuiblog.com/blog/2010/09/27/clearfix-reloaded-overflowhidden-demystified */
-
-.clearfix:before,
-.clearfix:after {
-  content: '\0020';
-  display: block;
-  overflow: hidden;
-  visibility: hidden;
-  width: 0;
-  height: 0;
-}
-
-.clearfix:after {
-  clear: both;
-}
-
-/*
-  The following zoom:1 rule is specifically for IE6 + IE7.
-  Move to separate stylesheet if invalid CSS is a problem.
-*/
-
-.clearfix {
-  zoom: 1;
 }
