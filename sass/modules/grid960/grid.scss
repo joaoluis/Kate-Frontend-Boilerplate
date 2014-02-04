@@ -1,0 +1,124 @@
+/*!
+ * Kate Frontend Bootstrap Grid System
+ * Based on 960 Grid System - http://960.gs/
+ */
+
+@import "config";
+
+/**
+ * Grid settings
+ */
+
+$grid-row-width:    ($grid-columns * $grid-column-width) + ($grid-gutter-width * ($grid-columns - 1));
+$grid-total-width:  $grid-row-width + $grid-gutter-width;
+
+/**
+ * Mixins
+ */
+
+@mixin createGridBase {
+	body {
+	  min-width: #{$grid-total-width};
+	}
+	
+	.container_#{$grid_columns} {
+		margin-left: auto;
+		margin-right: auto;
+		width: #{$grid-total-width};
+	}
+}
+
+@mixin createGrids($direction) {
+	
+	@if $direction == $grid-rtl {
+	
+		.alpha { margin-right: 0; margin-left: #{$grid-gutter-width / 2}; }
+		.omega { margin-left: 0; margin-right: #{$grid-gutter-width / 2}; }
+		
+		$i: 0;
+		@for $i from 1 through $grid-columns {
+			.grid_#{$i} {
+				@extend %column-properties-rtl
+			}
+		}
+	} @else {
+		
+		$i: 0;
+		@for $i from 1 through $grid-columns {
+			.grid_#{$i} {
+				@extend %column-properties
+			}
+		}
+		.alpha { margin-left: 0; }
+		.omega { margin-right: 0; }
+	}
+}
+
+@mixin createPushPull {
+	$i: 0;
+	@for $i from 1 through $grid-columns {
+		.push_#{$i}, 
+		.pull_#{$i} {
+			@extend %push-pull-properties
+		}
+	}
+}
+
+@mixin createGridColumns {
+	$i: 0;
+	@for $i from 1 through $grid-columns {
+		.container_#{$grid_columns} .grid_#{$i} {
+			width: #{($grid-column-width * $i  + $grid-gutter-width * ($i - 1))}
+		}
+	}
+}
+
+@mixin createPrefixSuffix($direction) {
+	
+	$ps-left: "left"; $ps-right: "right";
+	@if $direction == $grid-rtl { $ps-left: "right"; $ps-right: "left"; }
+	
+	$i: 0;
+	@for $i from 1 through ($grid-columns - 1) {
+		.container_#{$grid_columns} .prefix_#{$i} {
+			padding-#{$ps-left}: #{($grid-column-width + $grid-gutter-width) * $i};
+			@if $i == ($grid-columns - 1) { padding-#{$ps-right}: inherit; }
+		}
+		.container_#{$grid_columns} .suffix_#{$i} {
+			padding-#{$ps-right}: #{($grid-column-width + $grid-gutter-width) * $i};
+			@if $i == 1 or $i == ($grid-columns - 1) { padding-#{$ps-left}: inherit; }
+		}
+		.container_#{$grid_columns} .push_#{$i} {
+			#{$ps-left}: #{($grid-column-width + $grid-gutter-width) * $i};
+			#{$ps-right}: auto;
+		}
+		.container_#{$grid_columns} .pull_#{$i} {
+			#{$ps-left}: -#{($grid-column-width + $grid-gutter-width) * $i};
+			#{$ps-right}: auto;
+		}
+	}
+}
+
+@mixin setGridSystem($direction) {
+	@include createGridBase;
+	@include createGrids($direction);
+	@include createPushPull;
+	@include createGridColumns;
+	@include createPrefixSuffix($direction);
+}
+
+%column-properties {
+	float: left;
+	display:inline;
+	position: relative;
+	margin-left: #{$grid-gutter-width / 2};
+	margin-right: #{$grid-gutter-width / 2};
+}
+
+%push-pull-properties {
+	position: relative;
+}
+
+%column-properties-rtl {
+	float: right;
+}

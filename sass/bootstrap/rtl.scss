@@ -1,0 +1,8 @@
+/*
+ * Right to left oriented layout config file
+ */
+
+@import "../kate_config.scss";
+
+@include createGrids($grid-rtl);
+@include createPrefixSuffix($grid-rtl);

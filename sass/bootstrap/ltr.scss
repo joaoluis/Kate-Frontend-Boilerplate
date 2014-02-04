@@ -1,0 +1,7 @@
+/*
+ * Left to right oriented layout config file
+ */
+
+@import "../kate_config.scss";
+
+@include setGridSystem($grid-ltr);
